@@ -1,5 +1,5 @@
 # Add example executable
-add_executable(laplace_fortran src/FortranExample.f90)
+add_executable(diffusion_fortran src/DiffusionExample.f90)
 
 # Turn on Fortran preprocessing (#include directives)
 if (MSVC)
@@ -7,7 +7,7 @@ if (MSVC)
 else()
     set(PROC_OPT "-cpp")
 endif()
-target_compile_options(laplace_fortran PRIVATE ${PROC_OPT})
+target_compile_options(diffusion_fortran PRIVATE ${PROC_OPT})
 
 # Link to opencmiss
 # -----------------
@@ -24,11 +24,13 @@ target_compile_options(laplace_fortran PRIVATE ${PROC_OPT})
 #     target_link_libraries(${EXAMPLE_BINARY} PRIVATE petsc)
 #
 # All the OpenCMISS dependencies provide a target you can link against corresponding to the (lowercase) component name.
-target_link_libraries(laplace_fortran PRIVATE opencmiss)
+#target_link_libraries(diffusion_fortran PRIVATE opencmisslibs)
+target_link_libraries(diffusion_fortran PRIVATE "/home/ssaf006/OpenCMISS/install/lib/libiron.so")
+target_include_directories(diffusion_fortran PRIVATE "/home/ssaf006/OpenCMISS/install/include/opencmiss" "/usr/include/mpich")
 
 # Add a simple test that runs the executable
-add_test(NAME Laplace_Fortran COMMAND laplace_fortran)
-add_opencmiss_environment(Laplace_Fortran)
+add_test(NAME Diffusion_Fortran COMMAND diffusion_fortran)
+#add_opencmiss_environment(Laplace_Fortran)
 
 ###################
 # Developer notice!
